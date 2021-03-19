@@ -1,31 +1,6 @@
-% Habits
-% John Doe
-% March 22, 2005
+% Osa 3 - Hintavertailu Exceliin
+% Ilmari Kumpula / Fraktio
+% Helmikuu, 2021
 
-# In the morning
+# Hintavertailu Exceliin
 
-## Getting up
-
-- Turn off alarm
-- Get out of bed
-
-## Breakfast
-
-- Eat eggs
-- Drink coffee
-
-# In the evening
-
-## Dinner
-
-- Eat spaghetti
-- Drink wine
-
-------------------
-
-![picture of spaghetti](images/spaghetti.png)
-
-## Going to sleep
-
-- Get in bed
-- Count sheep

@@ -1,29 +1,18 @@
-% Habits
-% John Doe
-% March 22, 2005
+% Tee oma työrobottisi!
+% Ilmari Kumpula / Fraktio
+% Helmikuu, 2021
 
-# In the morning
+# Tee oma työrobottisi
 
-## Getting up
+## Mikä ihmeen xPath?
 
-- Turn off alarm
+- Kurssin
 - Get out of bed
-
-## Breakfast
-
-- Eat eggs
-- Drink coffee
-
-# In the evening
 
 ## Dinner
 
 - Eat spaghetti
 - Drink wine
-
-------------------
-
-![picture of spaghetti](images/spaghetti.png)
 
 ## Going to sleep
 
