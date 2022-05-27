@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <title>Tietokoneiden tilaussivu</title>
     <link rel="stylesheet" href="page.css"></link>
+    <style>
+      input[type=text], select {
+        width: 20em;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      input[type=submit] {
+        width: 20em;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      input[type=submit]:hover {
+        background-color: #45a049;
+      }
+      body {
+        background-color: #f2f2f2;
+      }
+      div {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+      }
+      </style>
   </head>
   <body>
-      <h1>Tietokoneiden tilauslomake</h1>
+    <h1 style="padding-top: 1.5em; padding-left: 1.3em;">Tietokoneiden tilauslomake</h1>
+    <div style="padding: 3em;">
     <form action="valmis.html">
         <label for="fname">Etunimi</label><br>
         <input type="text" id="fname" name="firstname"><br><br>
@@ -20,12 +55,9 @@
         <input type="text" id="post-city" name="post-city"><br><br>
         <label for="post-city">Minkä tietokoneen haluaisit ostaa? Kirjoita se kenttään.</label><br>
         <textarea id="computer-form" rows="5" cols="40" name="computer-form"></textarea><br><br>
-
-        <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat" checked=true>
-
-        <label for="vehicle3">Tilaan samalla uutiskirjeen</label><br><br>
-
-        <h4>Toimitustapa</h4>
+        <input type="checkbox" id="newsletter" name="newsletter" value="Order" checked=true>
+        <label for="newsletter">Tilaan samalla uutiskirjeen</label><br><br>
+        <h3>Toimitustapa</h3>
         <input type="radio" id="nouto" name="parcel" value="nouto" checked=true>
         <label for="nouto">Nouto toimipisteestä (0e)</label><br>
         <input type="radio" id="postimaatti" name="parcel" value="postimaatti">
@@ -34,6 +66,7 @@
         <label for="kotiin">Toimitus kotiin (15 euroa)</label><br><br>
         <input type="submit" value="Lähetä tilaus!" />
       </form>
+    </div>
   </body>
 </html>
 
