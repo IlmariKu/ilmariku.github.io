@@ -2,8 +2,8 @@
   "name": "indigo-tools",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://ilmariku.github.io",
   "type": "module",
+  "homepage": "https://ilmariku.github.io",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
