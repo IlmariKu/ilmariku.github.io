@@ -178,63 +178,6 @@ body {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
-/* Rating Screen */
-.rating-screen h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.exercise-name {
-  font-size: 1.1rem;
-  opacity: 0.8;
-  margin-bottom: 3rem;
-}
-
-.rating-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.rating-btn {
-  padding: 20px 25px;
-  border: none;
-  border-radius: 20px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: white;
-  min-height: 65px;
-}
-
-.rating-1 {
-  background: linear-gradient(45deg, #ff4757, #ff3838);
-}
-
-.rating-2 {
-  background: linear-gradient(45deg, #ff6b6b, #ff5252);
-}
-
-.rating-3 {
-  background: linear-gradient(45deg, #ffa726, #ff9800);
-}
-
-.rating-4 {
-  background: linear-gradient(45deg, #66bb6a, #4caf50);
-}
-
-.rating-5 {
-  background: linear-gradient(45deg, #4ecdc4, #00bcd4);
-}
-
-.rating-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
 /* Complete Screen */
 .complete-screen h1 {
   font-size: 2.5rem;

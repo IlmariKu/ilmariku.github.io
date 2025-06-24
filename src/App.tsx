@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import { SessionState, ExerciseResult } from './types';
+import { SessionState } from './types';
 import { exercises, EXERCISE_DURATION } from './exerciseData';
 
-type AppScreen = 'welcome' | 'exercise' | 'rest' | 'rating' | 'complete';
+type AppScreen = 'welcome' | 'exercise' | 'rest' | 'complete';
 
 function App() {
   const [screen, setScreen] = useState<AppScreen>('welcome');
@@ -119,8 +119,25 @@ function App() {
         });
       }, 1000);
     } else if (timeLeft === 0 && screen === 'exercise') {
-      // Exercise time's up, move to rating screen
-      setScreen('rating');
+      // Exercise time's up, move to next exercise or complete session
+      if (session.currentExerciseIndex < exercises.length - 1) {
+        setSession(prev => ({
+          ...prev,
+          currentExerciseIndex: prev.currentExerciseIndex + 1
+        }));
+        // Start rest period if rest duration > 0, otherwise go straight to next exercise
+        if (selectedRestDuration > 0) {
+          playRestSound(); // Play sound when rest begins
+          setTimeLeft(selectedRestDuration);
+          setScreen('rest');
+        } else {
+          setTimeLeft(selectedDuration);
+          setScreen('exercise');
+        }
+      } else {
+        setSession(prev => ({ ...prev, isActive: false }));
+        setScreen('complete');
+      }
     } else if (timeLeft === 0 && screen === 'rest') {
       // Rest time's up, move to next exercise
       playExerciseStartSound(); // Play sound when exercise starts after rest
@@ -146,19 +163,18 @@ function App() {
     setTimeout(() => playExerciseStartSound(), 100);
   };
 
-  const rateExercise = (rating: number) => {
-    const currentExercise = exercises[session.currentExerciseIndex];
-    const result: ExerciseResult = {
-      exerciseId: currentExercise.id,
-      rating,
-      timestamp: new Date()
-    };
+  const resetSession = () => {
+    setSession({
+      currentExerciseIndex: 0,
+      isActive: false,
+      results: [],
+      sessionDuration: selectedDuration
+    });
+    setTimeLeft(selectedDuration);
+    setScreen('welcome');
+  };
 
-    setSession(prev => ({
-      ...prev,
-      results: [...prev.results, result]
-    }));
-
+  const skipToNext = () => {
     // Move to next exercise or complete session
     if (session.currentExerciseIndex < exercises.length - 1) {
       setSession(prev => ({
@@ -178,17 +194,6 @@ function App() {
       setSession(prev => ({ ...prev, isActive: false }));
       setScreen('complete');
     }
-  };
-
-  const resetSession = () => {
-    setSession({
-      currentExerciseIndex: 0,
-      isActive: false,
-      results: [],
-      sessionDuration: selectedDuration
-    });
-    setTimeLeft(selectedDuration);
-    setScreen('welcome');
   };
 
   const renderWelcomeScreen = () => (
@@ -287,69 +292,21 @@ function App() {
         <div className="exercise-actions">
           <button
             className="skip-btn"
-            onClick={() => setScreen('rating')}
+            onClick={skipToNext}
           >
-            Finish Early
+            Skip to Next
           </button>
         </div>
       </div>
     );
   };
 
-  const renderRatingScreen = () => {
-    const currentExercise = exercises[session.currentExerciseIndex];
-
-    return (
-      <div className="screen rating-screen">
-        <h2>How did that go?</h2>
-        <p className="exercise-name">{currentExercise.title}</p>
-
-        <div className="rating-buttons">
-          {[1, 2, 3, 4, 5].map(rating => (
-            <button
-              key={rating}
-              className={`rating-btn rating-${rating}`}
-              onClick={() => rateExercise(rating)}
-            >
-              {rating === 1 && '😤 Terrible'}
-              {rating === 2 && '😔 Poor'}
-              {rating === 3 && '😐 Okay'}
-              {rating === 4 && '😊 Good'}
-              {rating === 5 && '🔥 Excellent'}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
   const renderCompleteScreen = () => {
-    const averageRating = session.results.length > 0
-      ? session.results.reduce((sum, result) => sum + result.rating, 0) / session.results.length
-      : 0;
-
     return (
       <div className="screen complete-screen">
         <h1>🎉 Session Complete!</h1>
         <div className="stats">
-          <p>Exercises completed: {session.results.length}</p>
-          <p>Average rating: {averageRating.toFixed(1)}/5</p>
-        </div>
-
-        <div className="results-summary">
-          <h3>Your Results:</h3>
-          <div className="results-grid">
-            {session.results.map((result, index) => {
-              const exercise = exercises.find(ex => ex.id === result.exerciseId);
-              return (
-                <div key={result.exerciseId} className="result-item">
-                  <span className="exercise-number">{index + 1}.</span>
-                  <span className="exercise-title">{exercise?.title}</span>
-                  <span className="rating">{'⭐'.repeat(result.rating)}</span>
-                </div>
-              );
-            })}
-          </div>
+          <p>Exercises completed: {exercises.length}</p>
         </div>
 
         <button className="restart-btn" onClick={resetSession}>
@@ -404,7 +361,6 @@ function App() {
       {screen === 'welcome' && renderWelcomeScreen()}
       {screen === 'exercise' && renderExerciseScreen()}
       {screen === 'rest' && renderRestScreen()}
-      {screen === 'rating' && renderRatingScreen()}
       {screen === 'complete' && renderCompleteScreen()}
     </div>
   );
