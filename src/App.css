@@ -51,14 +51,15 @@ body {
 .start-btn {
   background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
   border: none;
-  padding: 15px 30px;
-  font-size: 1.2rem;
+  padding: 20px 40px;
+  font-size: 1.4rem;
   font-weight: bold;
   color: white;
   border-radius: 50px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: 2rem;
+  min-height: 60px;
 }
 
 .start-btn:hover {
@@ -77,24 +78,29 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-bottom: 2rem;
   padding: 0 1rem;
 }
 
 .progress {
-  font-size: 1.1rem;
-  opacity: 0.8;
+  font-size: 2.5rem;
+  opacity: 0.9;
+  font-weight: 700;
 }
 
 .timer {
-  font-size: 4rem;
-  font-weight: bold;
+  font-size: 24rem;
+  font-weight: 900;
   background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.3));
+  position: relative;
 }
 
 .exercise-content {
@@ -102,21 +108,30 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 600px;
+  max-width: 800px;
   width: 100%;
 }
 
 .exercise-content h2 {
-  font-size: 2rem;
+  font-size: 8rem;
   margin-bottom: 1.5rem;
-  line-height: 1.2;
+  line-height: 1.0;
+  font-weight: 900;
+  text-align: center;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 15px rgba(255, 107, 107, 0.2));
 }
 
 .exercise-description {
-  font-size: 1.1rem;
+  font-size: 3rem;
   opacity: 0.9;
   margin-bottom: 2rem;
-  line-height: 1.4;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 600;
 }
 
 .video-link {
@@ -126,12 +141,14 @@ body {
 .video-link a {
   display: inline-block;
   background: rgba(255, 255, 255, 0.1);
-  padding: 12px 24px;
-  border-radius: 25px;
+  padding: 18px 36px;
+  border-radius: 30px;
   color: white;
   text-decoration: none;
   transition: background 0.2s ease;
   backdrop-filter: blur(10px);
+  font-size: 1.8rem;
+  font-weight: 600;
 }
 
 .video-link a:hover {
@@ -145,12 +162,15 @@ body {
 .skip-btn {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 10px 20px;
+  padding: 15px 30px;
   color: white;
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
+  font-size: 1.1rem;
+  font-weight: bold;
+  min-height: 50px;
 }
 
 .skip-btn:hover {
@@ -179,14 +199,15 @@ body {
 }
 
 .rating-btn {
-  padding: 15px 20px;
+  padding: 20px 25px;
   border: none;
-  border-radius: 15px;
-  font-size: 1.1rem;
+  border-radius: 20px;
+  font-size: 1.3rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
   color: white;
+  min-height: 65px;
 }
 
 .rating-1 {
@@ -297,18 +318,202 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
+/* Duration Selector Component */
+.duration-selector {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  margin: 2rem 0;
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 400px;
+}
+
+.duration-selector h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.duration-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.duration-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 20px;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+  font-size: 1.1rem;
+  min-height: 50px;
+}
+
+.duration-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.duration-btn.active {
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-duration {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.custom-duration label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.custom-time-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 8px 12px;
+  color: white;
+  border-radius: 8px;
+  width: 80px;
+  text-align: center;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.custom-time-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.custom-time-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Rest Screen */
+.rest-screen {
+  justify-content: flex-start;
+  padding-top: 2rem;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+}
+
+.rest-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+}
+
+.rest-timer {
+  font-size: 18.5rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #4ecdc4, #44a08d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.rest-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+}
+
+.rest-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #4ecdc4;
+}
+
+.next-exercise {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.countdown-warning {
+  font-size: 1.1rem;
+  color: #ff6b6b;
+  font-weight: bold;
+  margin-top: 1rem;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.rest-actions {
+  margin-top: 2rem;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .welcome-screen h1 {
     font-size: 2rem;
   }
 
+  .duration-selector {
+    padding: 15px;
+    margin: 1.5rem 0;
+  }
+
+  .duration-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .duration-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
   .timer {
-    font-size: 3rem;
+    font-size: 12rem;
+    line-height: 0.8;
   }
 
   .exercise-content h2 {
-    font-size: 1.5rem;
+    font-size: 4rem;
+    line-height: 1.0;
+  }
+
+  .exercise-description {
+    font-size: 2rem;
+  }
+
+  .progress {
+    font-size: 1.8rem;
   }
 
   .rating-buttons {
@@ -323,11 +528,40 @@ body {
   .complete-screen h1 {
     font-size: 2rem;
   }
+
+  .rest-timer {
+    font-size: 3rem;
+  }
+
+  .rest-content h2 {
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
   .screen {
     padding: 15px;
+  }
+
+  .duration-selector {
+    padding: 12px;
+    margin: 1rem 0;
+  }
+
+  .duration-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .duration-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .custom-time-input {
+    width: 70px;
+    padding: 6px 8px;
+    font-size: 0.9rem;
   }
 
   .exercise-header {
@@ -337,11 +571,21 @@ body {
   }
 
   .timer {
-    font-size: 2.5rem;
+    font-size: 8rem;
+    line-height: 0.8;
   }
 
   .exercise-content h2 {
-    font-size: 1.3rem;
+    font-size: 2.5rem;
+    line-height: 1.0;
+  }
+
+  .exercise-description {
+    font-size: 1.4rem;
+  }
+
+  .progress {
+    font-size: 1.6rem;
   }
 
   .results-grid {
