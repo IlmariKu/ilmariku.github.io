@@ -199,12 +199,11 @@ function App() {
   const renderWelcomeScreen = () => (
     <div className="screen welcome-screen">
       <h1>10K Touches Soccer Training</h1>
-      <p>You'll go through {exercises.length} exercises.</p>
 
       <div className="duration-selector">
         <h3>Exercise Duration</h3>
         <div className="duration-options">
-          {[10, 15, 20, 30, 45, 60].map(duration => (
+          {[60, 75, 90, 120, 150, 240].map(duration => (
             <button
               key={duration}
               className={`duration-btn ${selectedDuration === duration ? 'active' : ''}`}
@@ -220,7 +219,7 @@ function App() {
             id="custom-time"
             type="number"
             min="5"
-            max="300"
+            max="600"
             value={selectedDuration}
             onChange={(e) => setSelectedDuration(Number(e.target.value))}
             className="custom-time-input"
@@ -231,13 +230,13 @@ function App() {
       <div className="duration-selector">
         <h3>Rest Duration Between Exercises</h3>
         <div className="duration-options">
-          {[0, 5, 10, 15, 20, 30].map(duration => (
+          {[5, 10, 15, 20].map(duration => (
             <button
               key={duration}
               className={`duration-btn ${selectedRestDuration === duration ? 'active' : ''}`}
               onClick={() => setSelectedRestDuration(duration)}
             >
-              {duration === 0 ? 'None' : `${duration}s`}
+              {`${duration}s`}
             </button>
           ))}
         </div>
@@ -276,16 +275,9 @@ function App() {
         </div>
 
         <div className="exercise-content">
-          <h2>{currentExercise.title}</h2>
+          <h1>{currentExercise.title}</h1>
           {currentExercise.description && (
             <p className="exercise-description">{currentExercise.description}</p>
-          )}
-          {currentExercise.videoUrl && (
-            <div className="video-link">
-              <a href={currentExercise.videoUrl} target="_blank" rel="noopener noreferrer">
-                📹 Watch Video
-              </a>
-            </div>
           )}
         </div>
 
@@ -331,10 +323,10 @@ function App() {
         </div>
 
         <div className="rest-content">
-          <h2>Rest Time 🔔</h2>
-          <p className="next-exercise">Next up: {nextExercise.title}</p>
+          <h3>Rest Time 🔔</h3>
+          <h1 >{nextExercise.title}</h1>
           {nextExercise.description && (
-            <p className="exercise-description">{nextExercise.description}</p>
+            <h1>{nextExercise.description}</h1>
           )}
           {timeLeft <= 3 && timeLeft > 0 && (
             <p className="countdown-warning">🔔 Get ready! Starting in {timeLeft}...</p>
