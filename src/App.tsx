@@ -58,7 +58,7 @@ function App() {
   // Wake lock functions
   const requestWakeLock = async () => {
     try {
-      if ('wakeLock' in navigator) {
+      if ('wakeLock' in navigator && navigator.wakeLock) {
         const wakeLockSentinel = await navigator.wakeLock.request('screen');
         setWakeLock(wakeLockSentinel);
         console.log('Wake lock acquired');
