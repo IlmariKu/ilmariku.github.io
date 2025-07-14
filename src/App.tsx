@@ -17,6 +17,25 @@ function App() {
   });
   const [timeLeft, setTimeLeft] = useState(EXERCISE_DURATION);
   const [wakeLock, setWakeLock] = useState<WakeLockSentinel | null>(null);
+  const [exerciseOrder, setExerciseOrder] = useState<number[]>(() =>
+    Array.from({ length: exercises.length }, (_, i) => i)
+  );
+
+  // Shuffle array function
+  const shuffleArray = (array: number[]) => {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+  };
+
+  // Randomize exercise order
+  const randomizeExercises = () => {
+    const shuffled = shuffleArray(exerciseOrder);
+    setExerciseOrder(shuffled);
+  };
 
   // Wake lock functions
   const requestWakeLock = async () => {
@@ -174,7 +193,7 @@ function App() {
       }, 1000);
     } else if (timeLeft === 0 && screen === 'exercise') {
       // Exercise time's up, move to next exercise or complete session
-      if (session.currentExerciseIndex < exercises.length - 1) {
+      if (session.currentExerciseIndex < exerciseOrder.length - 1) {
         setSession(prev => ({
           ...prev,
           currentExerciseIndex: prev.currentExerciseIndex + 1
@@ -308,6 +327,12 @@ function App() {
         </div>
       </div>
 
+      <div className="exercise-controls">
+        <button className="randomize-btn" onClick={randomizeExercises}>
+          🎲 Randomize Exercise Order
+        </button>
+      </div>
+
       <button className="start-btn" onClick={startSession}>
         Start Training
       </button>
@@ -315,13 +340,13 @@ function App() {
   );
 
   const renderExerciseScreen = () => {
-    const currentExercise = exercises[session.currentExerciseIndex];
+    const currentExercise = exercises[exerciseOrder[session.currentExerciseIndex]];
 
     return (
       <div className="screen exercise-screen">
         <div className="exercise-header">
           <div className="progress">
-            Exercise {session.currentExerciseIndex + 1} of {exercises.length}
+            Exercise {session.currentExerciseIndex + 1} of {exerciseOrder.length}
           </div>
           <div className="timer">
             {timeLeft}s
