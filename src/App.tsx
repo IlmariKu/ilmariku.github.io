@@ -33,7 +33,9 @@ function App() {
 
   // Randomize exercise order
   const randomizeExercises = () => {
-    const shuffled = shuffleArray(exerciseOrder);
+    // Start with a fresh sequential array and shuffle it
+    const freshOrder = Array.from({ length: exercises.length }, (_, i) => i);
+    const shuffled = shuffleArray(freshOrder);
     setExerciseOrder(shuffled);
   };
 
@@ -370,9 +372,6 @@ function App() {
     return (
       <div className="screen exercise-screen">
         <div className="exercise-header">
-          <div className="progress">
-            Exercise {session.currentExerciseIndex + 1} of {exerciseOrder.length}
-          </div>
           <div className="timer">
             {timeLeft}s
           </div>
@@ -424,14 +423,11 @@ function App() {
   };
 
   const renderRestScreen = () => {
-    const nextExercise = exercises[session.currentExerciseIndex];
+    const nextExercise = exercises[exerciseOrder[session.currentExerciseIndex]];
 
     return (
       <div className="screen rest-screen">
         <div className="rest-header">
-          <div className="progress">
-            Next: Exercise {session.currentExerciseIndex + 1} of {exercises.length}
-          </div>
           <div className="timer rest-timer">
             {timeLeft}s
           </div>
