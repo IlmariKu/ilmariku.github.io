@@ -16,6 +16,60 @@ function App() {
     sessionDuration: EXERCISE_DURATION
   });
   const [timeLeft, setTimeLeft] = useState(EXERCISE_DURATION);
+  const [wakeLock, setWakeLock] = useState<WakeLockSentinel | null>(null);
+
+  // Wake lock functions
+  const requestWakeLock = async () => {
+    try {
+      if ('wakeLock' in navigator) {
+        const wakeLockSentinel = await navigator.wakeLock.request('screen');
+        setWakeLock(wakeLockSentinel);
+        console.log('Wake lock acquired');
+      }
+    } catch (error) {
+      console.log('Wake lock not supported or failed:', error);
+    }
+  };
+
+  const releaseWakeLock = async () => {
+    if (wakeLock) {
+      try {
+        await wakeLock.release();
+        setWakeLock(null);
+        console.log('Wake lock released');
+      } catch (error) {
+        console.log('Failed to release wake lock:', error);
+      }
+    }
+  };
+
+  // Request wake lock when session starts
+  useEffect(() => {
+    if (session.isActive && (screen === 'exercise' || screen === 'rest')) {
+      requestWakeLock();
+    } else {
+      releaseWakeLock();
+    }
+
+    // Clean up wake lock on unmount
+    return () => {
+      if (wakeLock) {
+        wakeLock.release();
+      }
+    };
+  }, [session.isActive, screen]);
+
+  // Handle page visibility change to re-request wake lock
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden && session.isActive && (screen === 'exercise' || screen === 'rest')) {
+        requestWakeLock();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [session.isActive, screen]);
 
   // Sound function
   const playRestSound = () => {
@@ -29,7 +83,7 @@ function App() {
       gainNode.connect(audioContext.destination);
 
       oscillator.frequency.setValueAtTime(800, audioContext.currentTime); // Higher pitch beep
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.8, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
 
       oscillator.start(audioContext.currentTime);
@@ -51,7 +105,7 @@ function App() {
 
       // Two quick beeps for exercise start
       oscillator.frequency.setValueAtTime(600, audioContext.currentTime);
-      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.7, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
 
       oscillator.start(audioContext.currentTime);
@@ -68,7 +122,7 @@ function App() {
           gainNode2.connect(audioContext2.destination);
 
           oscillator2.frequency.setValueAtTime(800, audioContext2.currentTime);
-          gainNode2.gain.setValueAtTime(0.3, audioContext2.currentTime);
+          gainNode2.gain.setValueAtTime(0.7, audioContext2.currentTime);
           gainNode2.gain.exponentialRampToValueAtTime(0.01, audioContext2.currentTime + 0.2);
 
           oscillator2.start(audioContext2.currentTime);
@@ -93,7 +147,7 @@ function App() {
       gainNode.connect(audioContext.destination);
 
       oscillator.frequency.setValueAtTime(400, audioContext.currentTime); // Lower pitch for countdown
-      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.6, audioContext.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
 
       oscillator.start(audioContext.currentTime);
