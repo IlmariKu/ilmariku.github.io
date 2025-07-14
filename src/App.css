@@ -420,6 +420,26 @@ body {
   margin-top: 2rem;
 }
 
+/* Session Info */
+.session-info {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.total-duration {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ffd93d;
+}
+
+.exercise-count {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .welcome-screen h1 {

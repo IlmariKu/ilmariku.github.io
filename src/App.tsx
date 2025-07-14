@@ -37,6 +37,22 @@ function App() {
     setExerciseOrder(shuffled);
   };
 
+  // Calculate total session duration
+  const calculateTotalDuration = () => {
+    const exerciseDuration = exerciseOrder.length * selectedDuration;
+    const restDuration = (exerciseOrder.length - 1) * selectedRestDuration; // No rest after last exercise
+    const totalSeconds = exerciseDuration + restDuration;
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours}h ${minutes}m`;
+    } else {
+      return `${minutes}m`;
+    }
+  };
+
   // Wake lock functions
   const requestWakeLock = async () => {
     try {
@@ -333,6 +349,15 @@ function App() {
         </button>
       </div>
 
+      <div className="session-info">
+        <div className="total-duration">
+          <strong>Total Session Duration: {calculateTotalDuration()}</strong>
+        </div>
+        <div className="exercise-count">
+          {exerciseOrder.length} exercises
+        </div>
+      </div>
+
       <button className="start-btn" onClick={startSession}>
         Start Training
       </button>
@@ -373,11 +398,22 @@ function App() {
   };
 
   const renderCompleteScreen = () => {
+    const actualDuration = session.startTime ?
+      Math.floor((new Date().getTime() - session.startTime.getTime()) / 1000) : 0;
+    const actualHours = Math.floor(actualDuration / 3600);
+    const actualMinutes = Math.floor((actualDuration % 3600) / 60);
+    const actualTimeString = actualHours > 0 ?
+      `${actualHours}h ${actualMinutes}m` : `${actualMinutes}m`;
+
     return (
       <div className="screen complete-screen">
         <h1>🎉 Session Complete!</h1>
         <div className="stats">
-          <p>Exercises completed: {exercises.length}</p>
+          <p>Exercises completed: {exerciseOrder.length}</p>
+          <p>Estimated duration: {calculateTotalDuration()}</p>
+          {session.startTime && (
+            <p>Actual time: {actualTimeString}</p>
+          )}
         </div>
 
         <button className="restart-btn" onClick={resetSession}>
